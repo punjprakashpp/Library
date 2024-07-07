@@ -1,0 +1,174 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.bg {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 960px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+#head {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#head img {
+    width: 960px;
+    height: auto;
+}
+
+#title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#title h1 {
+    font-size: 40px; /* Slightly larger for better emphasis */
+    color: #007bff; /* Maintain the primary color */
+    margin: 0;
+    padding: 10px 0; /* Add padding for better spacing */
+    font-weight: bold; /* Make the text bold */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Add a subtle text shadow */
+    border-bottom: 2px solid #007bff; /* Add a bottom border for emphasis */
+    display: inline-block; /* Ensure the bottom border is only as wide as the text */
+}
+
+#main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#img {
+    margin-right: 20px; /* Optional: add some space between the images and login form */
+}
+
+#img img {
+    width: 500px;
+    height: auto;
+}
+
+#login {
+    width: 400px;
+}
+
+table.tbl {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tblhead {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+td {
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.lbl {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.txt {
+    width: calc(100% - 20px);
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+asp:RequiredFieldValidator {
+    color: red;
+    font-size: 10px;
+}
+
+asp:Label {
+    display: block;
+    margin-top: 10px;
+}
+
+/* Mobile CSS */
+@media (max-width: 768px) {
+    .bg {
+        width: 90%;
+        margin: 20px;
+        padding: 10px;
+    }
+
+    #head img {
+        width: 100%;
+    }
+
+    #title h1 {
+        font-size:24px;
+    }
+
+    #main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #img {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    #img img {
+        width: 100%;
+    }
+
+    #login {
+        width: 100%;
+    }
+
+    table.tbl {
+        width: 100%;
+    }
+
+    .tblhead {
+        font-size: 16px;
+    }
+
+    td {
+        padding: 5px;
+    }
+
+    .txt {
+        width: calc(100% - 10px);
+        padding: 5px;
+        margin: 5px 0;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 10px;
+    }
+}
