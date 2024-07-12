@@ -19,9 +19,9 @@ public partial class Addbook : System.Web.UI.Page
     {
         if (FileUpload1.HasFile)
         {
-            string filePath = Server.MapPath("~/img/book/") + FileUpload1.FileName;
+            string filePath = Server.MapPath("~/Library/img/book/") + FileUpload1.FileName;
             FileUpload1.SaveAs(filePath);
-            string imagePath = "~/img/book/" + FileUpload1.FileName;
+            string imagePath = "~/Library/img/book/" + FileUpload1.FileName;
 
             string query = "INSERT INTO Book (BookNo, BookName, Author, Detail, Publication, PubDate, Price, ImagePath) " +
                            "VALUES (@BookNo, @BookName, @Author, @Detail, @Publication, @PubDate, @Price, @ImagePath)";
