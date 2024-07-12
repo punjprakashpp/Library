@@ -43,7 +43,7 @@
             <td class="tblhead">ADD NEW STUDENT</td>
         </tr>
         <tr>
-            <td><asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Library/Librarian/UploadStudentData.aspx">Click here to upload student data using excel file</asp:HyperLink></td>
+            <td><asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="UploadStudentData.aspx">Click here to upload student data using excel file</asp:HyperLink></td>
         </tr>
         <tr>
             <td>&nbsp;</td>

@@ -76,4 +76,9 @@ public partial class Library_Librarian_Change : System.Web.UI.Page
             return rowsAffected > 0;
         }
     }
+
+    protected void btnBack_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Default.aspx");
+    }
 }

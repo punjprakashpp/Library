@@ -5,7 +5,7 @@
 <head id="Head1" runat="server">
     <title>UDCA Automated Library</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="stylesheet" type="text/css" href="Styles/styles.css" />
 </head>
 <body>
     <form id="form1" runat="server">

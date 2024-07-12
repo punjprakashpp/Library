@@ -12,9 +12,9 @@ public partial class Librarian_RemoveStudent : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         lblmsg.Text = "";
-        // Populate Session dropdown
         if (!Page.IsPostBack)
         {
+            // Populate Session dropdown
             PopulateSessionDropdown();
             MultiView1.ActiveViewIndex = -1;
         }

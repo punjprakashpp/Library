@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <title>Change Password</title>
-    <link rel="stylesheet" type="text/css" href="change.css" />
+    <link rel="stylesheet" type="text/css" href="Styles/change.css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="bg">
@@ -38,7 +38,9 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td></td>
+                    <td>
+                        <asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="Back to Home" CausesValidation="false" />
+                    </td>
                     <td>
                         <asp:Button ID="btnChangePassword" runat="server" Text="Change Password" OnClick="btnChangePassword_Click" />
                     </td>

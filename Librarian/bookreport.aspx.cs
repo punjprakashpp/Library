@@ -19,88 +19,68 @@ public partial class bookreport : System.Web.UI.Page
 
     protected void btnView_Click(object sender, EventArgs e)
     {
-        if (rdBookNo.Checked)
+        if (rdBookNo.Checked || rdBookName.Checked || rdAuthor.Checked || rdPublication.Checked)
         {
-            if (string.IsNullOrWhiteSpace(txtBookNo.Text))
+            if (string.IsNullOrWhiteSpace(txtSearch.Text))
             {
                 GridView1.DataSource = null;
                 GridView1.DataBind();
-                lblmsg.Text = "Enter Book No. !!";
+                lblmsg.Text = "Enter Search Text. !!";
                 lblmsg.ForeColor = System.Drawing.Color.Red;
                 MultiView1.ActiveViewIndex = -1;
             }
             else
             {
-                LoadBooksByBookNo(txtBookNo.Text);
-            }
-        }
-        else if (rdBookName.Checked)
-        {
-            if (string.IsNullOrWhiteSpace(txtBookName.Text))
-            {
-                GridView1.DataSource = null;
-                GridView1.DataBind();
-                lblmsg.Text = "Enter Book Name !!";
-                lblmsg.ForeColor = System.Drawing.Color.Red;
-                MultiView1.ActiveViewIndex = -1;
-            }
-            else
-            {
-                LoadBooksByName(txtBookName.Text);
+                string connectionString = ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd;
+                    string query = string.Empty;
+                    string SearchText = txtSearch.Text;
+                    if (rdBookNo.Checked)
+                    {
+                        query = "SELECT BID, BookNo, BookName, Author, Publication, Price FROM Book WHERE BookNo LIKE @BookNo";
+                        cmd = new SqlCommand(query, connection);
+                        cmd.Parameters.AddWithValue("@BookNo", "%" + SearchText + "%");
+                    }
+                    else if (rdBookName.Checked)
+                    {
+                        query = "SELECT BID, BookNo, bookname, Author, Publication, Price FROM Book WHERE bookname LIKE @bookname";
+                        cmd = new SqlCommand(query, connection);
+                        cmd.Parameters.AddWithValue("@bookname", "%" + SearchText + "%");
+                    }
+                    else if (rdAuthor.Checked)
+                    {
+                        query = "SELECT BID, BookNo, bookname, Author, Publication, Price FROM Book WHERE Author LIKE @Author";
+                        cmd = new SqlCommand(query, connection);
+                        cmd.Parameters.AddWithValue("@Author", "%" + SearchText + "%");
+                    }
+                    else
+                    {
+                        query = "SELECT BID, BookNo, bookname, Author, Publication, Price FROM Book WHERE Publication LIKE @Publication";
+                        cmd = new SqlCommand(query, connection);
+                        cmd.Parameters.AddWithValue("@Publication", "%" + SearchText + "%");
+                    }
+                    try
+                    {
+                        connection.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        GridView1.DataSource = reader;
+                        GridView1.DataBind();
+                        lblmsg0.Text = GridView1.Rows.Count.ToString() + " - Records Found.";
+                        MultiView1.ActiveViewIndex = 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        lblmsg.Text = "Error: " + ex.Message;
+                    }
+                }
             }
         }
         else
         {
             lblmsg.Text = "Select an option to view books.";
             lblmsg.ForeColor = System.Drawing.Color.Red;
-        }
-    }
-
-    private void LoadBooksByBookNo(string BookNo)
-    {
-        string connectionString = ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            string query = "SELECT BID, BookNo, BookName, Author, Publication, Price FROM Book WHERE BookNo LIKE @BookNo";
-            SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@BookNo", "%" + BookNo + "%");
-            try
-            {
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                GridView1.DataSource = reader;
-                GridView1.DataBind();
-                lblmsg0.Text = GridView1.Rows.Count.ToString() + " - Records Found.";
-                MultiView1.ActiveViewIndex = 0;
-            }
-            catch (Exception ex)
-            {
-                lblmsg.Text = "Error: " + ex.Message;
-            }
-        }
-    }
-
-    private void LoadBooksByName(string bookName)
-    {
-        string connectionString = ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            string query = "SELECT BID, BookNo, bookname, Author, Publication, Price FROM Book WHERE bookname LIKE @bookname";
-            SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@bookname", "%" + bookName + "%");
-            try
-            {
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                GridView1.DataSource = reader;
-                GridView1.DataBind();
-                lblmsg0.Text = GridView1.Rows.Count.ToString() + " - Records Found.";
-                MultiView1.ActiveViewIndex = 0;
-            }
-            catch (Exception ex)
-            {
-                lblmsg.Text = "Error: " + ex.Message;
-            }
         }
     }
 

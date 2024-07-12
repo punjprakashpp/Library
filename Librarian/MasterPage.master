@@ -4,97 +4,96 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Library Management System</title>
-    <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/StyleSheet.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div id="header">
-        <asp:Image ID="Image1" runat="server" ImageUrl="~/img/logo/logo-head-lib.png" AlternateText="Library Logo" />
-    </div>
-    <div id="main">
-        <div id="menu">
-            <table class="menu-table">
-                <tr>
-                    <td class="tblhead">
-                        Welcome
+        <div id="header">
+            <asp:Image ID="Image1" runat="server" ImageUrl="~/img/logo/logo-head-lib.png" AlternateText="Library Logo" />
+        </div>
+        <div id="main">
+            <div id="menu">
+                <table class="menu-table">
+                    <tr>
+                        <td class="tblhead">Welcome
                         <asp:Label ID="lblname" runat="server" ForeColor="White"></asp:Label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="Button2" runat="server" CssClass="btnmenu" Text="ADD BOOK" PostBackUrl="~/Librarian/Addbook.aspx"
-                            CausesValidation="False" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="Button3" runat="server" CssClass="btnmenu" Text="BOOK REPORT" PostBackUrl="~/Librarian/bookreport.aspx"
-                            CausesValidation="False" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="Button4" runat="server" CssClass="btnmenu" Text="ADD STUDENT" PostBackUrl="~/Librarian/AddStudent.aspx"
-                            CausesValidation="False" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="Button5" runat="server" CssClass="btnmenu" Text="STUDENT REPORT"
-                            PostBackUrl="~/Librarian/Studenteport.aspx" CausesValidation="False" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="Button1" runat="server" CssClass="btnmenu" Text="REMOVE STUDENT"
-                            PostBackUrl="~/Librarian/RemoveStudent.aspx" CausesValidation="False" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="Button6" runat="server" CssClass="btnmenu" Text="ISSUE BOOK" PostBackUrl="~/Librarian/BookIssue.aspx"
-                            CausesValidation="False" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="Button7" runat="server" CssClass="btnmenu" Text="ISSUE REPORT" PostBackUrl="~/Librarian/Issuereport.aspx"
-                            CausesValidation="False" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="Button8" runat="server" CssClass="btnmenu" Text="RETURN BOOK" PostBackUrl="~/Librarian/BookReturn.aspx"
-                            CausesValidation="False" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="Button9" runat="server" CssClass="btnmenu" Text="PENALTY REPORT"
-                            PostBackUrl="~/Librarian/PenaltyReport.aspx" CausesValidation="False" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="Button10" runat="server" CssClass="btnmenu" Text="PAY PENALTY" PostBackUrl="~/Librarian/Penalty.aspx"
-                            CausesValidation="False" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="btnLogOut" runat="server" CssClass="btnmenu" Text="LOGOUT" CausesValidation="False"
-                            OnClick="btnLogOut_Click" />
-                    </td>
-                </tr>
-            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="Button2" runat="server" CssClass="btnmenu" Text="ADD BOOK" PostBackUrl="~/Librarian/Addbook.aspx"
+                                CausesValidation="False" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="Button3" runat="server" CssClass="btnmenu" Text="BOOK REPORT" PostBackUrl="~/Librarian/bookreport.aspx"
+                                CausesValidation="False" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="Button4" runat="server" CssClass="btnmenu" Text="ADD STUDENT" PostBackUrl="~/Librarian/AddStudent.aspx"
+                                CausesValidation="False" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="Button5" runat="server" CssClass="btnmenu" Text="STUDENT REPORT"
+                                PostBackUrl="~/Librarian/StudentReport.aspx" CausesValidation="False" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="Button1" runat="server" CssClass="btnmenu" Text="REMOVE STUDENT"
+                                PostBackUrl="~/Librarian/RemoveStudent.aspx" CausesValidation="False" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="Button6" runat="server" CssClass="btnmenu" Text="ISSUE BOOK" PostBackUrl="~/Librarian/BookIssue.aspx"
+                                CausesValidation="False" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="Button7" runat="server" CssClass="btnmenu" Text="ISSUE REPORT" PostBackUrl="~/Librarian/Issuereport.aspx"
+                                CausesValidation="False" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="Button8" runat="server" CssClass="btnmenu" Text="RETURN BOOK" PostBackUrl="~/Librarian/BookReturn.aspx"
+                                CausesValidation="False" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="Button9" runat="server" CssClass="btnmenu" Text="PENALTY REPORT"
+                                PostBackUrl="~/Librarian/PenaltyReport.aspx" CausesValidation="False" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="Button10" runat="server" CssClass="btnmenu" Text="PAY PENALTY" PostBackUrl="~/Librarian/Penalty.aspx"
+                                CausesValidation="False" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="btnLogOut" runat="server" CssClass="btnmenu" Text="LOGOUT" CausesValidation="False"
+                                OnClick="btnLogOut_Click" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="detail">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
         </div>
-        <div id="detail">
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
-        </div>
-    </div>
     </form>
 </body>
 </html>

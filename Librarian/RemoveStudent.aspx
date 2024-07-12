@@ -2,26 +2,21 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
-        .style1
-        {
+        .style1 {
             width: 739px;
         }
-        .style2
-        {
+        .style2 {
             width: 202px;
         }
-        .style3
-        {
+        .style3 {
             text-align: right;
             color: Green;
             width: 157px;
         }
-        .style4
-        {
+        .style4 {
             width: 561px;
         }
-        .style5
-        {
+        .style5 {
             text-align: right;
             color: Green;
             width: 249px;
@@ -29,17 +24,17 @@
         .lbl {
             text-align: center;
         }
-        .auto-style1 {
-            text-align: right;
-            color: Green;
-            width: 249px;
-            height: 29px;
-        }
-        .auto-style2 {
-            height: 29px;
-        }
     </style>
+    <script type="text/javascript">
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this student?");
+        }
+        function confirmSessionDelete() {
+            return confirm("Are you sure you want to delete this session?");
+        }
+    </script>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <table class="tbl">
         <tr>
@@ -48,33 +43,27 @@
             </td>
         </tr>
         <tr>
-            <td>
-                &nbsp;
-            </td>
+            <td>&nbsp;</td>
         </tr>
         <tr>
             <td>
                 <table class="style1">
                     <tr>
                         <td class="lbl">
-                            Select an entire Session to Remove : 
+                            Select an entire Session to Remove :
                             <asp:DropDownList ID="ddlSession" runat="server" CssClass="txt" AutoPostBack="false"></asp:DropDownList>
                             <asp:Button ID="btnRemSem" runat="server" CssClass="btn" OnClick="btnRemSem_Click" ValidationGroup="SessionValidation"
-                                Text="Delete Session" />
+                                Text="Delete Session" OnClientClick="return confirmSessionDelete();" />
                             <br />
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="ddlSession"
-                                ErrorMessage="Please select a session" ForeColor="Red" ValidationGroup="SessionValidation" SetFocusOnError="True"></asp:RequiredFieldValidator>                                                  
+                                ErrorMessage="Please select a session" ForeColor="Red" ValidationGroup="SessionValidation" SetFocusOnError="True"></asp:RequiredFieldValidator>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            &nbsp;
-                        </td>
+                        <td>&nbsp;</td>
                     </tr>
                     <tr>
-                        <td>
-                            Search a Student to Remove :
-                        </td>
+                        <td>Search a Student to Remove via :-</td>
                     </tr>
                     <tr>
                         <td class="lbl">
@@ -118,7 +107,7 @@
                                             <asp:TemplateField HeaderText="Remove">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lnkRem" runat="server" CommandName="Remove" CommandArgument='<%# Eval("sid") %>'
-                                                        CssClass="lnk" Text="Remove"></asp:LinkButton>
+                                                        CssClass="lnk" Text="Remove" OnClientClick="return confirmDelete();" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -139,10 +128,7 @@
             </td>
         </tr>
         <tr>
-            <td>
-                &nbsp;
-            </td>
+            <td>&nbsp;</td>
         </tr>
     </table>
 </asp:Content>
-

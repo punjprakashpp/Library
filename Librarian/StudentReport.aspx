@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true"
-    CodeFile="Studenteport.aspx.cs" Inherits="Studenteport" %>
+    CodeFile="StudentReport.aspx.cs" Inherits="Studenteport" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <style type="text/css">
@@ -31,7 +31,7 @@
             text-align: center;
         }
         .auto-style1 {
-            text-align: right;
+            text-align: left;
             color: Green;
             width: 249px;
             height: 29px;
@@ -58,6 +58,7 @@
                 <table class="style1">
                     <tr>
                         <td class="lbl">
+                            <asp:Label ID="Label1" runat="server" Text="Search for Student via:-"></asp:Label>
                             <asp:RadioButton ID="rdRoll" runat="server" Text="Roll No. :" GroupName="SearchCriteria"
                                 AutoPostBack="True" />
                             <asp:RadioButton ID="rdName" runat="server" Text="Student Name :" GroupName="SearchCriteria"
