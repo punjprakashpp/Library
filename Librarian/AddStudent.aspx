@@ -18,21 +18,18 @@
             width: 471px;
             height: 415px;
         }
-        .style2
-        {
+        .style2 {
             text-align: right;
             color: #007bff;
             width: 159px;
             padding-right: 5px;
             vertical-align: top;
         }
-        .style3
-        {
+        .style3 {
             width: 159px;
         }
-        .txt 
-        {
-            width:200px;
+        .txt {
+            width: 200px;
         }
     </style>
 </asp:Content>
@@ -65,6 +62,8 @@
                             <asp:TextBox ID="txtRoll" runat="server" CssClass="txt"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtRoll"
                                 ErrorMessage="Roll number is required" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidatorRoll" runat="server" ControlToValidate="txtRoll"
+                                ErrorMessage="Roll number must be numeric" ForeColor="Red" SetFocusOnError="True" ValidationExpression="^\d+$"></asp:RegularExpressionValidator>
                         </td>
                     </tr>
                     <tr>
@@ -86,6 +85,8 @@
                         <td class="style2">Date of Birth :</td>
                         <td>
                             <asp:TextBox ID="txtBirthDate" runat="server" CssClass="txt"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtBirthDate"
+                                ErrorMessage="Date of Birth is required" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                         </td>
                     </tr>
                     <tr>
@@ -94,9 +95,8 @@
                             <asp:TextBox ID="txtmobile" runat="server" CssClass="txt"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="txtmobile"
                                 ErrorMessage="Mobile number is required" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
-                            <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="txtmobile"
-                                ErrorMessage="Please enter a valid mobile number" ForeColor="Red" MaximumValue="9999999999"
-                                MinimumValue="1000000000" SetFocusOnError="True" Type="Double"></asp:RangeValidator>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidatorMobile" runat="server" ControlToValidate="txtmobile"
+                                ErrorMessage="Mobile number must be numeric and 10 digits" ForeColor="Red" SetFocusOnError="True" ValidationExpression="^\d{10}$"></asp:RegularExpressionValidator>
                         </td>
                     </tr>
                     <tr>
@@ -125,6 +125,8 @@
                         <td class="style2">Pincode :</td>
                         <td>
                             <asp:TextBox ID="txtpincode" runat="server" CssClass="txt"></asp:TextBox>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidatorPincode" runat="server" ControlToValidate="txtpincode"
+                                ErrorMessage="Pincode must be numeric and 6 digits" ForeColor="Red" SetFocusOnError="True" ValidationExpression="^\d{6}$"></asp:RegularExpressionValidator>
                         </td>
                     </tr>
                     <tr>

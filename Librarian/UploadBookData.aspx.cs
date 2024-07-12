@@ -22,7 +22,8 @@ public partial class Library_Librarian_UploadBookData : System.Web.UI.Page
     {
         if (FileUpload1.HasFile)
         {
-            string filePath = Server.MapPath("~/Library/Uploads/") + Path.GetFileName(FileUpload1.PostedFile.FileName);
+            string filePath = Server.MapPath("~/Uploads/") + Path.GetFileName(FileUpload1.PostedFile.FileName);
+            //string filePath = Server.MapPath("~/Library/Uploads/") + Path.GetFileName(FileUpload1.PostedFile.FileName);
             FileUpload1.SaveAs(filePath);
 
             DataTable dtExcelData = new DataTable();

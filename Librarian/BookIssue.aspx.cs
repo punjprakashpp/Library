@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 public partial class BookIssue : System.Web.UI.Page
 {
-    // Class-level variables to store SID, BID, and BookNo
+    // Class-level variables to store SID & BID
     private int sid
     {
         get
@@ -29,26 +29,13 @@ public partial class BookIssue : System.Web.UI.Page
         }
     }
 
-    private string bookno
-    {
-        get
-        {
-            return ViewState["bookno"] != null ? ViewState["bookno"].ToString() : string.Empty;
-        }
-        set
-        {
-            ViewState["bookno"] = value;
-        }
-    }
-
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            // Initialize sid, bid, and bookno
+            // Initialize sid & bid
             sid = -1;
             bid = -1;
-            bookno = string.Empty;
         }
     }
 
@@ -60,7 +47,7 @@ public partial class BookIssue : System.Web.UI.Page
 
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string query = "SELECT BID, BookNo, BookName FROM Book WHERE BookNo = @BookNo";
+            string query = "SELECT BID, BookNo, BookName, Author, Publication FROM Book WHERE BookNo = @BookNo";
 
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
@@ -72,10 +59,11 @@ public partial class BookIssue : System.Web.UI.Page
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.Read())
                     {
-                        // Store the BID, BookNo in the class-level variables
+                        // Store the BID in the class-level variables
                         bid = reader.GetInt32(reader.GetOrdinal("BID"));
                         txtBookName.Text = reader.GetString(reader.GetOrdinal("BookName"));
-                        bookno = reader.GetString(reader.GetOrdinal("BookNo"));
+                        txtAuthor.Text = reader.GetString(reader.GetOrdinal("Author"));
+                        txtPublication.Text = reader.GetString(reader.GetOrdinal("Publication"));
                         lblMessage.Text = "";
                     }
                     else
@@ -101,7 +89,7 @@ public partial class BookIssue : System.Web.UI.Page
 
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string query = "SELECT SID, Name FROM Student WHERE Roll = @Roll";
+            string query = "SELECT SID, Session, Roll, Name FROM Student WHERE Roll = @Roll";
 
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
@@ -116,6 +104,7 @@ public partial class BookIssue : System.Web.UI.Page
                         // Store the SID in the class-level variable
                         sid = reader.GetInt32(reader.GetOrdinal("SID"));
                         txtStudentName.Text = reader.GetString(reader.GetOrdinal("Name"));
+                        txtSession.Text = reader.GetString(reader.GetOrdinal("Session"));
                         lblMessage.Text = "";
                     }
                     else
@@ -151,37 +140,58 @@ public partial class BookIssue : System.Web.UI.Page
 
                         using (SqlConnection connection = new SqlConnection(connectionString))
                         {
-                            string query = "INSERT INTO Rent (BID, BookNo, BookName, SID, IssueDate, ReturnDate, Status) VALUES (@BID, @BookNo, @BookName, @SID, @IssueDate, @ReturnDate, @Status)";
+                            string checkStatusQuery = "SELECT Status FROM Rent WHERE BID = @BID";
 
-                            using (SqlCommand cmd = new SqlCommand(query, connection))
+                            using (SqlCommand checkStatusCmd = new SqlCommand(checkStatusQuery, connection))
                             {
-                                cmd.Parameters.AddWithValue("@BID", bid); // Use the stored BID
-                                cmd.Parameters.AddWithValue("@BookNo", bookno); // Use the stored BookNo
-                                cmd.Parameters.AddWithValue("@BookName", txtBookName.Text);
-                                cmd.Parameters.AddWithValue("@SID", sid); // Use the stored SID
-                                cmd.Parameters.AddWithValue("@IssueDate", issueDate);
-                                cmd.Parameters.AddWithValue("@ReturnDate", returnDate);
-                                cmd.Parameters.AddWithValue("@Status", 1); // Assuming 1 indicates book issued
+                                checkStatusCmd.Parameters.AddWithValue("@BID", bid);
 
                                 try
                                 {
                                     connection.Open();
-                                    cmd.ExecuteNonQuery();
-                                    lblMessage.Text = "Book issued successfully.";
-                                    lblMessage.ForeColor = System.Drawing.Color.Green;
+                                    int status = (int)checkStatusCmd.ExecuteScalar();
+                                    if (status == 1)
+                                    {
+                                        lblMessage.Text = "Book is already issued to someone.";
+                                        lblMessage.ForeColor = System.Drawing.Color.Red;
+                                    }
+                                    else
+                                    {
+                                        string updateQuery = "UPDATE Rent SET SID = @SID, IssueDate = @IssueDate, ReturnDate = @ReturnDate, Status = @Status WHERE BID = @BID";
 
-                                    // Clear form fields
-                                    txtRollNo.Text = "";
-                                    txtStudentName.Text = "";
-                                    txtBookNo.Text = "";
-                                    txtBookName.Text = "";
-                                    txtIssueDate.Text = "";
-                                    txtReturnDate.Text = "";
+                                        using (SqlCommand cmd = new SqlCommand(updateQuery, connection))
+                                        {
+                                            cmd.Parameters.AddWithValue("@BID", bid); // Use the stored BID
+                                            cmd.Parameters.AddWithValue("@SID", sid); // Use the stored SID
+                                            cmd.Parameters.AddWithValue("@IssueDate", issueDate);
+                                            cmd.Parameters.AddWithValue("@ReturnDate", returnDate);
+                                            cmd.Parameters.AddWithValue("@Status", 1); // Assuming 1 indicates book issued
 
-                                    // Reset the SID, BID, and BookNo after issuing the book
-                                    sid = -1;
-                                    bid = -1;
-                                    bookno = string.Empty;
+                                            try
+                                            {
+                                                cmd.ExecuteNonQuery();
+                                                lblMessage.Text = "Book issued successfully.";
+                                                lblMessage.ForeColor = System.Drawing.Color.Green;
+
+                                                // Clear form fields
+                                                txtRollNo.Text = "";
+                                                txtStudentName.Text = "";
+                                                txtBookNo.Text = "";
+                                                txtBookName.Text = "";
+                                                txtIssueDate.Text = "";
+                                                txtReturnDate.Text = "";
+
+                                                // Reset the SID, BID, and BookNo after issuing the book
+                                                sid = -1;
+                                                bid = -1;
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                lblMessage.Text = "Error: " + ex.Message;
+                                                lblMessage.ForeColor = System.Drawing.Color.Red;
+                                            }
+                                        }
+                                    }
                                 }
                                 catch (Exception ex)
                                 {

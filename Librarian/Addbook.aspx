@@ -121,6 +121,7 @@
                         <td class="style4">Book Photo :</td>
                         <td>
                             <asp:FileUpload ID="FileUpload1" runat="server" CssClass="txt" />
+                            <asp:Label ID="lblFileTypeError" runat="server" ForeColor="Red" Visible="false">Invalid file type. Only .jpg, .jpeg, .png files are allowed.</asp:Label>
                         </td>
                     </tr>
                     <tr>

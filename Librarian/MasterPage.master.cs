@@ -24,6 +24,9 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
             // Call the function to insert penalties if not already inserted
             InsertPenaltyIfNotExists();
+
+            // Call the function to insert dummy data into Rent table
+            InsertDummyDataIntoRentTable();
         }
     }
 
@@ -51,9 +54,9 @@ public partial class MasterPage : System.Web.UI.MasterPage
             WHERE r.Status = 1
             AND DATEDIFF(day, r.ReturnDate, GETDATE()) > 0 
             AND p.PID IS NULL"; // Ensures no duplicate penalty records are inserted
-            
+
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@Amount",Convert.ToDouble(100.00));
+            command.Parameters.AddWithValue("@Amount", Convert.ToDouble(100.00));
             try
             {
                 connection.Open();
@@ -69,6 +72,41 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 // Handle exceptions here
                 // You might want to log the exception or display an error message
                 // lblmsg.Text = "Error occurred while inserting penalties: " + ex.Message;
+            }
+        }
+    }
+
+    // Function to insert dummy data into Rent table
+    private void InsertDummyDataIntoRentTable()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
+
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string query = @"
+            INSERT INTO Rent (SID, BID, IssueDate, ReturnDate, Status)
+            SELECT 0 AS SID, BID, @IssueDate AS IssueDate, @ReturnDate AS ReturnDate, 0 AS Status
+            FROM Book
+            WHERE BID NOT IN (SELECT BID FROM Rent)";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@IssueDate", DateTime.Now);
+            command.Parameters.AddWithValue("@ReturnDate", DateTime.Now.AddMonths(1));
+            try
+            {
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    // Optional: Log or display a message indicating how many dummy records were inserted
+                    // lblmsg.Text = $"{rowsAffected} new dummy record(s) inserted into Rent table.";
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions here
+                // You might want to log the exception or display an error message
+                // lblmsg.Text = "Error occurred while inserting dummy data: " + ex.Message;
             }
         }
     }

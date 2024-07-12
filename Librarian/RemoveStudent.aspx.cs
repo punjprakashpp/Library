@@ -74,7 +74,7 @@ public partial class Librarian_RemoveStudent : System.Web.UI.Page
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
-                adapter.SelectCommand.Parameters.AddWithValue(parameterName, searchCriteria + "%");
+                adapter.SelectCommand.Parameters.AddWithValue(parameterName, "%" + searchCriteria + "%");
                 DataTable studentTable = new DataTable();
                 try
                 {
@@ -142,6 +142,12 @@ public partial class Librarian_RemoveStudent : System.Web.UI.Page
             catch (Exception ex)
             {
                 lblmsg.Text = "Error: " + ex.Message;
+            }
+            finally
+            {
+                ddlSession.Items.Clear();
+                // Populate Session dropdown
+                PopulateSessionDropdown();
             }
         }
     }

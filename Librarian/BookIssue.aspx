@@ -40,16 +40,20 @@
             <td>
                 <table class="style1">
                     <tr>
-                        <td class="lbl">Roll No :</td>
+                        <td class="lbl">Roll No:</td>
                         <td><asp:TextBox ID="txtRollNo" runat="server" CssClass="txt"></asp:TextBox></td>
                         <td><asp:Button ID="btnFetchStudent" runat="server" CssClass="btn" Text="Fetch Student" OnClick="btnFetchStudent_Click" /></td>
                     </tr>
                     <tr>
-                        <td class="lbl">Student Name :</td>
+                        <td class="lbl">Session:</td>
+                        <td colspan="2"><asp:TextBox ID="txtSession" runat="server" CssClass="txt" ReadOnly="true"></asp:TextBox></td>
+                    </tr>
+                    <tr>
+                        <td class="lbl">Student Name:</td>
                         <td colspan="2"><asp:TextBox ID="txtStudentName" runat="server" CssClass="txt" ReadOnly="true"></asp:TextBox></td>
                     </tr>
                     <tr>
-                        <td class="lbl">Book No :</td>
+                        <td class="lbl">Book No:</td>
                         <td><asp:TextBox ID="txtBookNo" runat="server" CssClass="txt"></asp:TextBox></td>
                         <td><asp:Button ID="btnFetchBook" runat="server" CssClass="btn" Text="Fetch Book Detail" OnClick="btnFetchBook_Click" /></td>
                     </tr>
@@ -58,11 +62,19 @@
                             <td colspan="2"><asp:TextBox ID="txtBookName" runat="server" CssClass="txt" ReadOnly="true"></asp:TextBox></td>
                     </tr>
                     <tr>
-                        <td class="lbl">Issue Date :</td>
+                        <td class="lbl">Author:</td>
+                            <td colspan="2"><asp:TextBox ID="txtAuthor" runat="server" CssClass="txt" ReadOnly="true"></asp:TextBox></td>
+                    </tr>
+                    <tr>
+                        <td class="lbl">Publication:</td>
+                            <td colspan="2"><asp:TextBox ID="txtPublication" runat="server" CssClass="txt" ReadOnly="true"></asp:TextBox></td>
+                    </tr>
+                    <tr>
+                        <td class="lbl">Issue Date:</td>
                         <td colspan="2"><asp:TextBox ID="txtIssueDate" runat="server" CssClass="txt"></asp:TextBox></td>
                     </tr>
                     <tr>
-                        <td class="lbl">Return Date :</td>
+                        <td class="lbl">Return Date:</td>
                         <td colspan="2"><asp:TextBox ID="txtReturnDate" runat="server" CssClass="txt"></asp:TextBox></td>
                     </tr>
                     <tr>
