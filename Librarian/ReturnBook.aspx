@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="BookReturn.aspx.cs" Inherits="BookReturn" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="ReturnBook.aspx.cs" Inherits="BookReturn" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
@@ -48,8 +48,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <table class="tbl">
         <tr>
-            <td class="tblhead">
-                BOOK RETURN FORM</td>
+            <td class="tblhead">RETURN BOOK</td>
         </tr>
         <tr>
             <td>
@@ -63,15 +62,20 @@
                             Roll No. :
                             <asp:TextBox ID="txtRoll" runat="server" CssClass="txt"></asp:TextBox>
                             <asp:Button ID="btnFetchIssueBook" runat="server" CssClass="btn" Text="Fetch Book" OnClick="btnFetchIssueBook_Click" Width="100px" />
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtRoll"
-                                ErrorMessage="Roll number is required" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
+                            
                         </td>
+                        <td class="style1"><asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtRoll"
+                            ErrorMessage="Roll number is required" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
+                    </tr>
+                    <tr>
                         <td class="style1">
                             Book No. :
                             <asp:DropDownList ID="drpbook" runat="server" CssClass="txt" AutoPostBack="false"></asp:DropDownList>
                             <asp:Button ID="btnSelectBook" runat="server" CssClass="btn" Text="Select Book" OnClick="btnSelectBook_Click" ValidationGroup="bookValidation" Width="100px" />
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="drpbook" ErrorMessage="Book should be selected" ForeColor="Red" SetFocusOnError="True" ValidationGroup="bookValidation"></asp:RequiredFieldValidator>
+                            
                         </td>
+                        <td class="style1"><asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="drpbook" 
+                            ErrorMessage="Book should be selected" ForeColor="Red" SetFocusOnError="True" ValidationGroup="bookValidation"></asp:RequiredFieldValidator></td>
                     </tr>
                     <tr>
                         <td class="style1">

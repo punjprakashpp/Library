@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="Issuereport.aspx.cs" Inherits="Issuereport" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="IssueReport.aspx.cs" Inherits="Issuereport" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
@@ -19,28 +19,32 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <table class="tbl">
         <tr>
-            <td class="tblhead">ISSUE BOOK REPORT</td>
+            <td class="tblhead">ISSUED BOOK REPORT</td>
         </tr>
         <tr>
             <td>&nbsp;</td>
         </tr>
         <tr>
+            <td>&nbsp;<asp:Label ID="Label1" runat="server" Text="Search for Issused Book via:-"></asp:Label></td>
+        </tr>
+        <tr>
             <td>
                 <table class="style1">
                     <tr>
-                        <td class="style3">Roll No.:</td>
-                        <td class="style2">
-                            <asp:TextBox ID="txtRoll" runat="server" CssClass="txt"></asp:TextBox>
+                        <td>
+                            <asp:RadioButton ID="rdRoll" runat="server" Text="Roll No. :" GroupName="ViewOption" />
+                            <asp:RadioButton ID="rdName" runat="server" Text="Student Name :" GroupName="ViewOption" />
+                            <asp:RadioButton ID="rdBookNo" runat="server" Text="Book No :" GroupName="ViewOption" />
+                            <asp:RadioButton ID="rdBookName" runat="server" Text="Book Name :" GroupName="ViewOption" />
+                            <asp:TextBox ID="txtsearch" runat="server" CssClass="txt"></asp:TextBox>
                         </td>
-                        <td class="lbl">
-                            &nbsp;<asp:Button ID="btnsearch" runat="server" CssClass="btn" OnClick="btnsearch_Click" Text="View" />
-                        </td>
+                        <td><asp:Button ID="btnsearch" runat="server" CssClass="btn" OnClick="btnsearch_Click" Text="View" /></td>
                     </tr>
                 </table>
             </td>
         </tr>
         <tr>
-            <td><asp:Label ID="lbl" runat="server" ForeColor="Red"></asp:Label></td>
+            <td><asp:Label ID="lblmsg" runat="server" ForeColor="Red"></asp:Label></td>
         </tr>
         <tr>
             <td>&nbsp;</td>
@@ -50,6 +54,8 @@
                 <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="1px" CellPadding="2" ForeColor="Black" GridLines="None" Width="750px">
                     <AlternatingRowStyle BackColor="PaleGoldenrod" />
                     <Columns>
+                        <asp:BoundField DataField="Roll" HeaderText="Roll No" />
+                        <asp:BoundField DataField="Name" HeaderText="Student Name" />
                         <asp:BoundField DataField="BookNo" HeaderText="Book No" />
                         <asp:BoundField DataField="BookName" HeaderText="Book Name" />
                         <asp:BoundField DataField="IssueDate" HeaderText="Issue Date" />

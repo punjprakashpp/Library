@@ -60,7 +60,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td>
+                        <td><hr /></td>
                     </tr>
                     <tr>
                         <td>Search a Student to Remove via :-</td>

@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Web.UI;
 
 public partial class Student_MyPenalty : System.Web.UI.Page
 {

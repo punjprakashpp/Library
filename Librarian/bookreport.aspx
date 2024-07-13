@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="bookreport.aspx.cs" Inherits="bookreport" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="BookReport.aspx.cs" Inherits="bookreport" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
@@ -17,8 +17,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <table class="tbl">
         <tr>
-            <td class="tblhead">VIEW BOOK</td>
+            <td class="tblhead">BOOK REPORT</td>
         </tr>
+        <tr><td>&nbsp;</td></tr>
         <tr>
             <td><asp:Label ID="Label1" runat="server" Text="Search for Book via:-"></asp:Label></td>
 

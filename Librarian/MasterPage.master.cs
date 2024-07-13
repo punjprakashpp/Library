@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
 using System.Web;
-using System.Web.UI;
 
 public partial class MasterPage : System.Web.UI.MasterPage
 {

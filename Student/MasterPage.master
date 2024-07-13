@@ -18,7 +18,7 @@
             <table style="width: 100%; border-right-style: solid; border-right-width: thin; border-right-color: #007bff;">
                 <tr>
                     <td class="tblhead">
-                        welcome
+                        Welcome
                     </td>
                 </tr>
                 <tr>
@@ -39,20 +39,20 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Button ID="Button2" runat="server" CssClass="btnmenu" Text="MY Report" PostBackUrl="~/Student/MyBook.aspx"
+                        <asp:Button ID="Button2" runat="server" CssClass="btnmenu" Text="MY BOOKS" PostBackUrl="~/Student/MyBook.aspx"
                             CausesValidation="False" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <asp:Button ID="Button3" runat="server" CssClass="btnmenu" Text="PENALTY Report"
+                        <asp:Button ID="Button3" runat="server" CssClass="btnmenu" Text="MY PENALTY"
                             CausesValidation="False" PostBackUrl="~/Student/MyPenalty.aspx" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <asp:Button ID="Button4" runat="server" CssClass="btnmenu" Text="BOOK Report" CausesValidation="False"
-                            PostBackUrl="~/Student/bookreport.aspx"/>
+                        <asp:Button ID="Button4" runat="server" CssClass="btnmenu" Text="VIEW BOOKS" CausesValidation="False"
+                            PostBackUrl="~/Student/ViewBooks.aspx"/>
                     </td>
                 </tr>
                 <tr>

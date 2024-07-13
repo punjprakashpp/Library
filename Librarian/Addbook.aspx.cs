@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Data;
 using System.Data.SqlClient;
-using System.Web.UI.WebControls;
 
 public partial class Addbook : System.Web.UI.Page
 {

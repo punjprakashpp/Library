@@ -126,9 +126,9 @@ public partial class BookIssue : System.Web.UI.Page
     {
         if (Page.IsValid)
         {
-            if (bid != -1) // Check if BID is valid
+            if (sid != -1) // Check if BID is valid
             {
-                if (sid != -1) // Check if SID is valid
+                if (bid != -1) // Check if SID is valid
                 {
                     DateTime issueDate;
                     DateTime returnDate;
@@ -209,13 +209,13 @@ public partial class BookIssue : System.Web.UI.Page
                 }
                 else
                 {
-                    lblMessage.Text = "Please fetch student details first.";
+                    lblMessage.Text = "Please fetch book details first."; 
                     lblMessage.ForeColor = System.Drawing.Color.Red;
                 }
             }
             else
             {
-                lblMessage.Text = "Please fetch book details first.";
+                lblMessage.Text = "Please fetch student details first.";
                 lblMessage.ForeColor = System.Drawing.Color.Red;
             }
         }

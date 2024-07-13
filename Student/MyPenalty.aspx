@@ -15,6 +15,10 @@
         <td class="tblhead">
             PENATY REPORT</td>
     </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblmsg" runat="server" Text="" ForeColor="Red"></asp:Label></td>
+        </tr>
     <tr>
         <td style="text-align: center">
                 </td>
@@ -26,15 +30,12 @@
                 CellPadding="2" ForeColor="Black" GridLines="None" Width="668px">
                 <AlternatingRowStyle BackColor="PaleGoldenrod" />
                 <Columns>
-                    <asp:BoundField DataField="bookname" HeaderText="BookName" />
-                    <asp:BoundField DataField="price" HeaderText="Price">
-                    <ItemStyle Width="70px" />
-                    </asp:BoundField>
-                    <asp:BoundField DataField="Amount" HeaderText="Penalty Amt">
-                    <ItemStyle Width="110px" />
-                    </asp:BoundField>
-                    <asp:BoundField DataField="detail" HeaderText="Detail" />
-                    <asp:BoundField DataField="entrydate" HeaderText="Date" />
+                    <asp:BoundField DataField="bookno" HeaderText="Book No" />
+                    <asp:BoundField DataField="bookname" HeaderText="Book Name" />
+                    <asp:BoundField DataField="price" HeaderText="Book Price" />
+                    <asp:BoundField DataField="Amount" HeaderText="Penalty Amount" />
+                    <asp:BoundField DataField="detail" HeaderText="Penalty Detail" />
+                    <asp:BoundField DataField="entrydate" HeaderText="Penalty Date" />
                 </Columns>
                 <FooterStyle BackColor="Tan" />
                 <HeaderStyle BackColor="Tan" Font-Bold="True" />

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="Penalty.aspx.cs" Inherits="Penalty" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="PayPenalty.aspx.cs" Inherits="Penalty" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
@@ -42,6 +42,7 @@
         <tr>
             <td class="tblhead">PAY PENALTY</td>
         </tr>
+        <tr><td>&nbsp;</td></tr>
         <tr>
             <td>
                 <table class="style1">

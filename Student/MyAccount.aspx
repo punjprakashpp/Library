@@ -184,7 +184,7 @@
                             </tr>
                             <tr>
                                 <td align="right">
-                                    Confirm - Password :
+                                    Confirm Password :
                                 </td>
                                 <td align="left">
                                     <asp:TextBox ID="txtcpass" runat="server" CssClass="txt" TextMode="Password"></asp:TextBox>

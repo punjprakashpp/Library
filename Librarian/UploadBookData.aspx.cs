@@ -4,12 +4,6 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.IO;
 using ClosedXML.Excel;
-using System.Data.OleDb;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 public partial class Library_Librarian_UploadBookData : System.Web.UI.Page
 {

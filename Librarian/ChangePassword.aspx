@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Librarian/MasterPage.master" AutoEventWireup="true" CodeFile="Change.aspx.cs" Inherits="Library_Librarian_Change" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Librarian/MasterPage.master" AutoEventWireup="true" CodeFile="ChangePassword.aspx.cs" Inherits="Library_Librarian_Change" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <title>Change Password</title>

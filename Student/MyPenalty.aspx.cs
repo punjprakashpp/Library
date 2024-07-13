@@ -16,7 +16,12 @@ public partial class Student_MyPanalty : System.Web.UI.Page
     private void FetchPenaltyData()
     {
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
-        string query = "SELECT PID, SID, BookName, Price, Penalty, Amount, Detail, EntryDate FROM Penalty WHERE SID = @SID";
+        string query = @"
+                SELECT b.BookNo, b.BookName, b.Price, r.Amount, r.Detail, r.EntryDate
+                FROM Rent r
+                INNER JOIN Book b ON r.BID = b.BID
+                INNER JOIN Student s ON r.SID = s.SID
+                WHERE s.SID = @SID AND r.Penalty = @Penalty";
 
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
@@ -26,14 +31,22 @@ public partial class Student_MyPanalty : System.Web.UI.Page
                 int sid = Convert.ToInt32(Session["sid"]);
 
                 cmd.Parameters.AddWithValue("@SID", sid);
-
+                cmd.Parameters.AddWithValue("@Penalty", 1);
                 conn.Open();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);
-
-                GridView3.DataSource = dt;
-                GridView3.DataBind();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    GridView3.DataSource = dt;
+                    GridView3.DataBind();
+                }
+                else
+                {
+                    lblmsg.Text = "No Penalty is found.";
+                }
+                    
             }
         }
     }

@@ -9,35 +9,39 @@ public partial class Student_MyBook : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            FetchRentData(null);
         }
     }
 
     protected void btntaken_Click(object sender, EventArgs e)
     {
-        FetchRentData(sender);
+        FetchRentData(1);
     }
 
     protected void btnreturn_Click(object sender, EventArgs e)
     {
-        FetchRentData(sender);
+        FetchRentData(0);
     }
 
-    private void FetchRentData(object sender)
+    private void clear()
     {
+        lblmsg.Text = "";
+        MultiView1.ActiveViewIndex = -1;
+    }
+
+    private void FetchRentData(int status)
+    {
+        clear();
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
         int sid = Convert.ToInt32(Session["sid"]);
 
-        int status = 0; // Default to borrowed books
-        if (sender != null && sender is Button)
-        {
-            Button button = (Button)sender;
-            status = button.ID == "btntaken" ? 1 : 0;
-        }
-
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string query = "SELECT BookName, IssueDate, DATEDIFF(day, IssueDate, ReturnDate) AS Days, ReturnDate FROM Rent WHERE SID = @SID AND Status = @Status";
+            string query = @"
+                SELECT b.BookNo, b.BookName, r.IssueDate, DATEDIFF(day, r.IssueDate, r.ReturnDate) AS Days
+                FROM Rent r
+                INNER JOIN Book b ON r.BID = b.BID
+                INNER JOIN Student s ON r.SID = s.SID
+                WHERE s.SID = @SID AND r.Status = @Status";
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 command.Parameters.AddWithValue("@SID", sid);
@@ -66,6 +70,8 @@ public partial class Student_MyBook : System.Web.UI.Page
                     else
                     {
                         // Handle no rows found scenario
+                        lblmsg.Text = "No Books Found !!";
+                        MultiView1.ActiveViewIndex = -1;
                     }
                 }
             }

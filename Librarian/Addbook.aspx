@@ -93,7 +93,7 @@
                             <asp:TextBox ID="txtPublication" runat="server" CssClass="txt"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" 
                                 ControlToValidate="txtPublication" ErrorMessage="Publication is required" ForeColor="Red" 
-                                InitialValue="SELECT" SetFocusOnError="True"></asp:RequiredFieldValidator>
+                                SetFocusOnError="True"></asp:RequiredFieldValidator>
                         </td>
                     </tr>
                     <tr>
@@ -102,7 +102,7 @@
                             <asp:TextBox ID="txtPubDate" runat="server" CssClass="txt"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" 
                                 ControlToValidate="txtPubDate" ErrorMessage="Publication Date is required" ForeColor="Red" 
-                                InitialValue="SELECT" SetFocusOnError="True"></asp:RequiredFieldValidator>
+                                SetFocusOnError="True"></asp:RequiredFieldValidator>
                         </td>
                     </tr>
                     <tr>

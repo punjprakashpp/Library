@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="BookIssue.aspx.cs" Inherits="BookIssue" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="IssueBook.aspx.cs" Inherits="BookIssue" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
@@ -27,13 +27,26 @@
         .style13 { height: 27px; color: #000066; font-size: small; }
         .style14 { text-align: right; color: Green; width: 136px; }
         .style15 { height: 49px; }
+        .auto-style2 {
+            height: 34px;
+        }
+        .auto-style3 {
+            text-align: right;
+            color: #007bff;
+            font-size: 12px;
+            height: 29px;
+            padding-right: 5px;
+        }
+        .auto-style4 {
+            height: 29px;
+        }
     </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <table class="tbl">
         <tr>
-            <td class="tblhead">BOOK ISSUE FORM</td>
+            <td class="tblhead">ISSUE BOOK</td>
         </tr>
         <tr><td>&nbsp;</td></tr>
         <tr>
@@ -54,8 +67,8 @@
                     </tr>
                     <tr>
                         <td class="lbl">Book No:</td>
-                        <td><asp:TextBox ID="txtBookNo" runat="server" CssClass="txt"></asp:TextBox></td>
-                        <td><asp:Button ID="btnFetchBook" runat="server" CssClass="btn" Text="Fetch Book Detail" OnClick="btnFetchBook_Click" /></td>
+                        <td class="auto-style2"><asp:TextBox ID="txtBookNo" runat="server" CssClass="txt"></asp:TextBox></td>
+                        <td class="auto-style2"><asp:Button ID="btnFetchBook" runat="server" CssClass="btn" Text="Fetch Book Detail" OnClick="btnFetchBook_Click" /></td>
                     </tr>
                     <tr>
                         <td class="lbl">Book Name:</td>
@@ -63,7 +76,7 @@
                     </tr>
                     <tr>
                         <td class="lbl">Author:</td>
-                            <td colspan="2"><asp:TextBox ID="txtAuthor" runat="server" CssClass="txt" ReadOnly="true"></asp:TextBox></td>
+                            <td colspan="2" class="auto-style4"><asp:TextBox ID="txtAuthor" runat="server" CssClass="txt" ReadOnly="true"></asp:TextBox></td>
                     </tr>
                     <tr>
                         <td class="lbl">Publication:</td>
@@ -75,11 +88,8 @@
                     </tr>
                     <tr>
                         <td class="lbl">Return Date:</td>
-                        <td colspan="2"><asp:TextBox ID="txtReturnDate" runat="server" CssClass="txt"></asp:TextBox></td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td colspan="2"><asp:Button ID="btnIssueBook" runat="server" CssClass="btn" Text="Issue Book" OnClick="btnIssueBook_Click" /></td>
+                        <td class="auto-style2"><asp:TextBox ID="txtReturnDate" runat="server" CssClass="txt"></asp:TextBox></td>
+                        <td class="auto-style2"><asp:Button ID="btnIssueBook" runat="server" CssClass="btn" Text="Issue Book" OnClick="btnIssueBook_Click" /></td>
                     </tr>
                     <tr>
                         <td colspan="3"><asp:Label ID="lblMessage" runat="server"></asp:Label></td>

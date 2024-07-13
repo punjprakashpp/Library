@@ -19,7 +19,7 @@
         </tr>
         <tr>
             <td style="text-align: center">
-                <asp:Button ID="btnChangePassword" runat="server" CssClass="btnmenu" Width="300" Text="Click here to change password" PostBackUrl="~/Librarian/Change.aspx"
+                <asp:Button ID="btnChangePassword" runat="server" CssClass="btnmenu" Width="300" Text="Click here to change password" PostBackUrl="~/Librarian/ChangePassword.aspx"
                     CausesValidation="False" />
             </td>
         </tr>
