@@ -7,14 +7,13 @@ using System.Web.UI.WebControls;
 
 public partial class Librarian_RemoveStudent : System.Web.UI.Page
 {
-    private string connectionString = ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
+    private readonly string connectionString = ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         lblmsg.Text = "";
-        if (!Page.IsPostBack)
+        if (!IsPostBack)
         {
-            // Populate Session dropdown
             PopulateSessionDropdown();
             MultiView1.ActiveViewIndex = -1;
         }
@@ -23,11 +22,12 @@ public partial class Librarian_RemoveStudent : System.Web.UI.Page
     private void PopulateSessionDropdown()
     {
         ddlSession.Items.Clear();
-        ddlSession.Items.Add(new ListItem("-Select-Session-", string.Empty));
+        ddlSession.Items.Add(new ListItem("--- Select Session ---", string.Empty));
+
+        string query = "SELECT DISTINCT Session FROM Student";
         using (SqlConnection connection = new SqlConnection(connectionString))
+        using (SqlCommand cmd = new SqlCommand(query, connection))
         {
-            string query = "SELECT DISTINCT Session FROM Student";
-            SqlCommand cmd = new SqlCommand(query, connection);
             try
             {
                 connection.Open();
@@ -37,12 +37,10 @@ public partial class Librarian_RemoveStudent : System.Web.UI.Page
                     string session = reader.GetString(reader.GetOrdinal("Session"));
                     ddlSession.Items.Add(new ListItem(session, session));
                 }
-                reader.Close();
             }
             catch (Exception ex)
             {
-                lblmsg.Text = "Error: " + ex.Message;
-                lblmsg.ForeColor = System.Drawing.Color.Red;
+                DisplayError("Error populating session dropdown: " + ex.Message);
             }
         }
     }
@@ -51,46 +49,41 @@ public partial class Librarian_RemoveStudent : System.Web.UI.Page
     {
         if (string.IsNullOrWhiteSpace(txtsearch.Text))
         {
-            lblmsg.Text = "Enter search criteria!";
-            GridView1.DataSource = null;
-            GridView1.DataBind();
-            MultiView1.ActiveViewIndex = -1;
+            DisplayError("Enter search criteria!");
+            ClearGridView();
+            return;
         }
-        else
+
+        string searchCriteria = txtsearch.Text.Trim();
+        string query = string.Empty;
+
+        if (rdRoll.Checked)
         {
-            string searchCriteria = txtsearch.Text.Trim();
-            string query = string.Empty;
-            string parameterName = "@SearchParam";
+            query = "SELECT sid, Roll, Name, Session FROM Student WHERE Roll LIKE @SearchParam";
+        }
+        else if (rdName.Checked)
+        {
+            query = "SELECT sid, Roll, Name, Session FROM Student WHERE Name LIKE @SearchParam";
+        }
 
-            if (rdRoll.Checked)
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+        {
+            adapter.SelectCommand.Parameters.AddWithValue("@SearchParam", "%" + searchCriteria + "%");
+            DataTable studentTable = new DataTable();
+            try
             {
-                query = "SELECT sid, Roll, Name, Session FROM Student WHERE Roll LIKE @SearchParam";
+                connection.Open();
+                adapter.Fill(studentTable);
+                GridView1.DataSource = studentTable;
+                GridView1.DataBind();
+                MultiView1.ActiveViewIndex = 0;
+                lbl.Text = studentTable.Rows.Count + " Student(s) Found.";
             }
-            else if (rdName.Checked)
+            catch (Exception ex)
             {
-                query = "SELECT sid, Roll, Name, Session FROM Student WHERE Name LIKE @SearchParam";
-            }
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
-                adapter.SelectCommand.Parameters.AddWithValue(parameterName, "%" + searchCriteria + "%");
-                DataTable studentTable = new DataTable();
-                try
-                {
-                    connection.Open();
-                    adapter.Fill(studentTable);
-                    GridView1.DataSource = studentTable;
-                    GridView1.DataBind();
-                    MultiView1.ActiveViewIndex = 0;
-                    lbl.Text = GridView1.Rows.Count.ToString() + " Student(s) Found.";
-                }
-                catch (Exception ex)
-                {
-                    lblmsg.Text = "Error: " + ex.Message;
-                    GridView1.DataSource = null;
-                    GridView1.DataBind();
-                }
+                DisplayError("Error searching students: " + ex.Message);
+                ClearGridView();
             }
         }
     }
@@ -101,9 +94,8 @@ public partial class Librarian_RemoveStudent : System.Web.UI.Page
         {
             int sid = Convert.ToInt32(e.CommandArgument);
             using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlCommand command = new SqlCommand("DELETE FROM Student WHERE sid = @sid", connection))
             {
-                string query = "DELETE FROM Student WHERE sid = @sid";
-                SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@sid", sid);
                 try
                 {
@@ -113,7 +105,7 @@ public partial class Librarian_RemoveStudent : System.Web.UI.Page
                 }
                 catch (Exception ex)
                 {
-                    lblmsg.Text = "Error: " + ex.Message;
+                    DisplayError("Error removing student: " + ex.Message);
                 }
             }
         }
@@ -124,31 +116,38 @@ public partial class Librarian_RemoveStudent : System.Web.UI.Page
         string selectedSession = ddlSession.SelectedValue;
         if (string.IsNullOrEmpty(selectedSession))
         {
-            lblmsg.Text = "Please select a session.";
+            DisplayError("Please select a session.");
             return;
         }
 
         using (SqlConnection connection = new SqlConnection(connectionString))
+        using (SqlCommand command = new SqlCommand("DELETE FROM Student WHERE Session = @Session", connection))
         {
-            string query = "DELETE FROM Student WHERE Session = @Session";
-            SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@Session", selectedSession);
             try
             {
                 connection.Open();
                 command.ExecuteNonQuery();
                 lblmsg.Text = "Students from the selected session removed successfully.";
+                PopulateSessionDropdown();
             }
             catch (Exception ex)
             {
-                lblmsg.Text = "Error: " + ex.Message;
-            }
-            finally
-            {
-                ddlSession.Items.Clear();
-                // Populate Session dropdown
-                PopulateSessionDropdown();
+                DisplayError("Error removing students by session: " + ex.Message);
             }
         }
+    }
+
+    private void DisplayError(string message)
+    {
+        lblmsg.Text = message;
+        lblmsg.ForeColor = System.Drawing.Color.Red;
+    }
+
+    private void ClearGridView()
+    {
+        GridView1.DataSource = null;
+        GridView1.DataBind();
+        MultiView1.ActiveViewIndex = -1;
     }
 }

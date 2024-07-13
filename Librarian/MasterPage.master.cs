@@ -38,7 +38,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         HttpContext.Current.ApplicationInstance.CompleteRequest();
     }
 
-    // Function to insert penalty records if they don't already exist
+    // Function to update penalty records in the Rent table if they don't already exist
     private void InsertPenaltyIfNotExists()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
@@ -46,14 +46,11 @@ public partial class MasterPage : System.Web.UI.MasterPage
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             string query = @"
-            INSERT INTO Penalty (SID, RID, BID, BookNo, BookName, Price, Penalty, Amount, Detail, EntryDate)
-            SELECT r.SID, r.RID, r.BID, b.BookNo, b.BookName, b.Price, 1, @Amount, 'Return Date Passed', GETDATE()
-            FROM Rent r
-            INNER JOIN Book b ON r.BID = b.BID
-            LEFT JOIN Penalty p ON r.SID = p.SID AND r.BID = p.BID
-            WHERE r.Status = 1
-            AND DATEDIFF(day, r.ReturnDate, GETDATE()) > 0 
-            AND p.PID IS NULL"; // Ensures no duplicate penalty records are inserted
+            UPDATE Rent
+            SET Penalty = 1, Amount = @Amount, Detail = 'Return Date Passed', EntryDate = GETDATE()
+            WHERE Status = 1
+            AND DATEDIFF(day, ReturnDate, GETDATE()) > 0 
+            AND Penalty IS NULL"; // Ensures no duplicate penalty records are inserted
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@Amount", Convert.ToDouble(100.00));
@@ -63,15 +60,15 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 int rowsAffected = command.ExecuteNonQuery();
                 if (rowsAffected > 0)
                 {
-                    // Optional: Log or display a message indicating how many penalties were inserted
-                    // lblmsg.Text = $"{rowsAffected} new penalty record(s) inserted.";
+                    // Optional: Log or display a message indicating how many penalties were updated
+                    // lblmsg.Text = $"{rowsAffected} penalty record(s) updated.";
                 }
             }
             catch (Exception ex)
             {
                 // Handle exceptions here
                 // You might want to log the exception or display an error message
-                // lblmsg.Text = "Error occurred while inserting penalties: " + ex.Message;
+                // lblmsg.Text = "Error occurred while updating penalties: " + ex.Message;
             }
         }
     }
@@ -84,8 +81,9 @@ public partial class MasterPage : System.Web.UI.MasterPage
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             string query = @"
-            INSERT INTO Rent (SID, BID, IssueDate, ReturnDate, Status)
-            SELECT 0 AS SID, BID, @IssueDate AS IssueDate, @ReturnDate AS ReturnDate, 0 AS Status
+            INSERT INTO Rent (SID, BID, IssueDate, ReturnDate, Status, Penalty, Amount, Detail, EntryDate)
+            SELECT 0 AS SID, BID, @IssueDate AS IssueDate, @ReturnDate AS ReturnDate, 0 AS Status, 
+                   0 AS Penalty, 0.0 AS Amount, 'No Penalty' AS Detail, NULL AS EntryDate
             FROM Book
             WHERE BID NOT IN (SELECT BID FROM Rent)";
 

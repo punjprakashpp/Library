@@ -54,7 +54,6 @@ public partial class BookReturn : System.Web.UI.Page
                         lblmsg.ForeColor = System.Drawing.Color.Red;
                         ClearBookDetails();
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -129,7 +128,7 @@ public partial class BookReturn : System.Web.UI.Page
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             string query = "SELECT b.BID, b.BookNo, b.Bookname, b.author, b.publication, b.price, b.ImagePath, " +
-               "r.IssueDate, DATEDIFF(day, r.IssueDate, ReturnDate) AS Days, " +
+               "r.IssueDate, DATEDIFF(day, r.IssueDate, GETDATE()) AS Days, r.Penalty, " +
                "s.Name AS StudentName " +
                "FROM Book b " +
                "INNER JOIN Rent r ON b.BID = r.Bid " +
@@ -154,10 +153,8 @@ public partial class BookReturn : System.Web.UI.Page
                     Image2.ImageUrl = reader["ImagePath"].ToString();
 
                     // Determine penalty status
-                    int days = Convert.ToInt32(reader["Days"]);
-                    DateTime issueDate = Convert.ToDateTime(reader["IssueDate"]);
-                    int penaltyDays = (DateTime.Now - issueDate).Days;
-                    lblpanalty.Text = (penaltyDays > days) ? "Yes" : "No";
+                    int penalty = Convert.ToInt32(reader["Penalty"]);
+                    lblpanalty.Text = (penalty == 1) ? "Yes" : "No";
 
                     MultiView1.ActiveViewIndex = 0;
                 }
@@ -181,15 +178,12 @@ public partial class BookReturn : System.Web.UI.Page
     {
         if (lblpanalty.Text == "Yes")
         {
-            lblbook.Text = "Please pay the penalty before returning the book!";
-            lblbook.ForeColor = System.Drawing.Color.Red;
-            ClearBookDetails();
-            // Your logic to handle penalty payment
+            // Use JavaScript to show an alert and ask if the user wants to pay the penalty
+            string script = "if(confirm('There is a penalty for this book. Do you want to pay the penalty now?')) { window.location='Penalty.aspx'; }";
+            ClientScript.RegisterStartupScript(this.GetType(), "Redirect", script, true);
         }
         else
         {
-            // Update the status of the book to indicate it has been returned and delete the record from Rent table
-            int studentId = sid;
             int rentId = Convert.ToInt32(drpbook.SelectedValue);
 
             string connectionString = ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
@@ -207,6 +201,8 @@ public partial class BookReturn : System.Web.UI.Page
                     {
                         lblbook.Text = "Book returned successfully!";
                         lblbook.ForeColor = System.Drawing.Color.Green;
+                        ClearBookDetails();
+                        LoadBooksByStudent(sid); // Refresh the book list for the student
                     }
                     else
                     {
@@ -218,10 +214,6 @@ public partial class BookReturn : System.Web.UI.Page
                 {
                     lblbook.Text = "Error: " + ex.Message;
                     lblbook.ForeColor = System.Drawing.Color.Red;
-                }
-                finally
-                {
-                    ClearBookDetails();
                 }
             }
         }
@@ -237,7 +229,7 @@ public partial class BookReturn : System.Web.UI.Page
         lblidate.Text = "";
         Image2.ImageUrl = "";
         lblpanalty.Text = "";
-        MultiView1.ActiveViewIndex = -1;
         lblbook.Text = "";
+        MultiView1.ActiveViewIndex = -1;
     }
 }

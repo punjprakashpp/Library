@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 public partial class Penalty : System.Web.UI.Page
 {
-    // Class-level variables to store SID, PID, and RID
+    // Class-level variables to store SID and RID
     private int sid
     {
         get
@@ -17,18 +17,6 @@ public partial class Penalty : System.Web.UI.Page
         set
         {
             ViewState["sid"] = value;
-        }
-    }
-
-    private int pid
-    {
-        get
-        {
-            return ViewState["pid"] != null ? (int)ViewState["pid"] : -1;
-        }
-        set
-        {
-            ViewState["pid"] = value;
         }
     }
 
@@ -99,9 +87,9 @@ public partial class Penalty : System.Web.UI.Page
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             string query = @"
-                SELECT PID, RID, BookNo, BookName 
-                FROM Penalty 
-                WHERE SID = @SID AND Penalty = 1";
+                SELECT RID, BookNo, BookName 
+                FROM Rent 
+                WHERE SID = @SID AND Penalty = 1 AND Status = 1";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@SID", studentId);
@@ -115,12 +103,11 @@ public partial class Penalty : System.Web.UI.Page
 
             while (reader.Read())
             {
-                pid = reader.GetInt32(reader.GetOrdinal("PID"));
                 rid = reader.GetInt32(reader.GetOrdinal("RID"));
                 string bookNo = reader.GetString(reader.GetOrdinal("BookNo"));
 
                 // Add each book to the dropdown list
-                drpbook.Items.Add(new ListItem(bookNo, pid.ToString()));
+                drpbook.Items.Add(new ListItem(bookNo, rid.ToString()));
             }
         }
     }
@@ -135,11 +122,11 @@ public partial class Penalty : System.Web.UI.Page
         }
         else
         {
-            DisplayBookDetails(Convert.ToInt32(drpbook.SelectedValue)); // Display details for the selected penalty's PID
+            DisplayBookDetails(Convert.ToInt32(drpbook.SelectedValue));
         }
     }
 
-    private void DisplayBookDetails(int penaltyId)
+    private void DisplayBookDetails(int rentId)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
 
@@ -147,15 +134,14 @@ public partial class Penalty : System.Web.UI.Page
         {
             string query = @"
                 SELECT b.BookNo, b.BookName, b.Author, b.Publication, b.Price, b.ImagePath,
-                       s.Roll, s.Name, DATEDIFF(day, r.IssueDate, r.ReturnDate) AS Days, r.IssueDate 
-                FROM Penalty p
-                INNER JOIN Rent r ON p.RID = r.RID
+                       s.Roll, s.Name, DATEDIFF(day, r.IssueDate, GETDATE()) AS Days, r.IssueDate, r.Penalty 
+                FROM Rent r
                 INNER JOIN Book b ON r.BID = b.BID
                 INNER JOIN Student s ON r.SID = s.SID
-                WHERE p.PID = @PID";
+                WHERE r.RID = @RID";
 
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@PID", penaltyId);
+            command.Parameters.AddWithValue("@RID", rentId);
 
             try
             {
@@ -176,12 +162,8 @@ public partial class Penalty : System.Web.UI.Page
                     lbldays.Text = reader["Days"].ToString();
                     lblidate.Text = Convert.ToDateTime(reader["IssueDate"]).ToString("dd-MM-yyyy");
 
-                    int daysAllowed = Convert.ToInt32(reader["Days"]);
-                    DateTime issueDate = Convert.ToDateTime(reader["IssueDate"]);
-                    DateTime currentDate = DateTime.Now;
-                    int daysPassed = (currentDate - issueDate).Days;
-
-                    lblpanalty.Text = daysPassed > daysAllowed ? "Yes" : "No";
+                    int penalty = Convert.ToInt32(reader["Penalty"]);
+                    lblpanalty.Text = (penalty == 1) ? "Yes" : "No";
                 }
                 else
                 {
@@ -216,39 +198,28 @@ public partial class Penalty : System.Web.UI.Page
         PayPenalty(Convert.ToInt32(drpbook.SelectedValue), Convert.ToDouble(txtpenalty.Text), txtdetail.Text);
     }
 
-    private void PayPenalty(int penaltyId, double amount, string detail)
+    private void PayPenalty(int rentId, double amount, string detail)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
 
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string updatePenaltyQuery = @"
-                UPDATE Penalty 
-                SET Penalty = 0, Price = @Amount, Detail = @Detail 
-                WHERE PID = @PID";
-
             string updateRentQuery = @"
                 UPDATE Rent 
-                SET Status = 0 
+                SET Penalty = 0, Price = @Amount, Detail = @Detail, Status = 0 
                 WHERE RID = @RID";
 
-            SqlCommand updatePenaltyCommand = new SqlCommand(updatePenaltyQuery, connection);
-            updatePenaltyCommand.Parameters.AddWithValue("@Amount", amount);
-            updatePenaltyCommand.Parameters.AddWithValue("@Detail", detail);
-            updatePenaltyCommand.Parameters.AddWithValue("@PID", penaltyId);
-
             SqlCommand updateRentCommand = new SqlCommand(updateRentQuery, connection);
-            updateRentCommand.Parameters.AddWithValue("@RID", rid); // Use rid for Rent ID
+            updateRentCommand.Parameters.AddWithValue("@Amount", amount);
+            updateRentCommand.Parameters.AddWithValue("@Detail", detail);
+            updateRentCommand.Parameters.AddWithValue("@RID", rentId);
 
             connection.Open();
             SqlTransaction transaction = connection.BeginTransaction();
 
             try
             {
-                updatePenaltyCommand.Transaction = transaction;
                 updateRentCommand.Transaction = transaction;
-
-                updatePenaltyCommand.ExecuteNonQuery();
                 updateRentCommand.ExecuteNonQuery();
 
                 transaction.Commit();
@@ -269,7 +240,6 @@ public partial class Penalty : System.Web.UI.Page
     private void ResetForm()
     {
         sid = -1; // Reset sid
-        pid = -1; // Reset pid
         rid = -1; // Reset rid
         txtdetail.Text = "";
         txtpenalty.Text = "";

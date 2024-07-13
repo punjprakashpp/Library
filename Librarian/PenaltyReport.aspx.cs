@@ -26,16 +26,18 @@ public partial class Student_MyPenalty : System.Web.UI.Page
                     SELECT 
                         s.Roll,
                         s.Name,
-                        p.BookNo,
-                        p.BookName,
-                        p.Price,
-                        p.Amount,
-                        p.Detail
+                        b.BookNo,
+                        b.BookName,
+                        b.Price,
+                        r.Amount,
+                        r.Detail
                     FROM 
-                        Penalty p
+                        Rent r
                     INNER JOIN 
-                        Student s ON p.SID = s.SID
-                    WHERE p.Penalty = 1";
+                        Student s ON r.SID = s.SID
+                    INNER JOIN 
+                        Book b ON r.BID = b.BID
+                    WHERE r.Penalty = 1 AND r.Status = 1";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
