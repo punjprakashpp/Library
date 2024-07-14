@@ -30,7 +30,7 @@ public partial class AddStudent : System.Web.UI.Page
         }
 
         string gender = rdomale.Checked ? "Male" : "Female";
-        string filePath = "~/Library/img/std/std.png";
+        string filePath = "~/img/std/std.png";
 
         if (fileUpload.HasFile)
         {
@@ -39,7 +39,7 @@ public partial class AddStudent : System.Web.UI.Page
 
             if (Array.Exists(allowedExtensions, ext => ext == fileExtension))
             {
-                filePath = "~/Library/img/std/" + fileUpload.FileName;
+                filePath = "~/img/std/" + fileUpload.FileName;
                 fileUpload.SaveAs(Server.MapPath(filePath));
             }
             else

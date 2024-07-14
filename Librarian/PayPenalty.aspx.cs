@@ -85,9 +85,9 @@ public partial class Penalty : System.Web.UI.Page
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             string query = @"
-                SELECT RID, BookNo, BookName 
-                FROM Rent 
-                WHERE SID = @SID AND Penalty = 1 AND Status = 1";
+                SELECT r.RID, b.BID, b.BookNo FROM Rent r 
+                INNER JOIN Book b ON r.BID = b.Bid 
+                WHERE r.SID = @SID AND Penalty = 1 AND Status = 1";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@SID", studentId);

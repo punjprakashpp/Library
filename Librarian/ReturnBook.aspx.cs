@@ -74,7 +74,7 @@ public partial class BookReturn : System.Web.UI.Page
         string connectionString = ConfigurationManager.ConnectionStrings["LibraryConnectionString"].ConnectionString;
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string query = "SELECT RID, BookNo, Bookname FROM Rent WHERE SID = @studentId AND Status = 1";
+            string query = "SELECT r.RID, b.BID, b.BookNo FROM Rent r INNER JOIN Book b ON r.BID = b.Bid WHERE r.SID = @studentId AND Status = 1";
             SqlCommand cmd = new SqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@studentId", studentId);
             try
@@ -199,9 +199,9 @@ public partial class BookReturn : System.Web.UI.Page
                     int result = cmd.ExecuteNonQuery();
                     if (result > 0)
                     {
+                        ClearBookDetails();
                         lblbook.Text = "Book returned successfully!";
                         lblbook.ForeColor = System.Drawing.Color.Green;
-                        ClearBookDetails();
                         LoadBooksByStudent(sid); // Refresh the book list for the student
                     }
                     else
@@ -221,6 +221,7 @@ public partial class BookReturn : System.Web.UI.Page
 
     private void ClearBookDetails()
     {
+        drpbook.Items.Remove("SELECT");
         lblbname.Text = "";
         lblauthor.Text = "";
         lblpub.Text = "";

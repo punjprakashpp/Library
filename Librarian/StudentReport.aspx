@@ -151,18 +151,18 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="auto-style1">
+                                            <td class="style5">
                                                 BirthDate :
                                             </td>
-                                            <td class="auto-style2">
+                                            <td>
                                                 <asp:Label ID="lbldob" runat="server"></asp:Label>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="auto-style1">
+                                            <td class="style5">
                                                 Gender :
                                             </td>
-                                            <td class="auto-style2">
+                                            <td>
                                                 <asp:Label ID="lblGen" runat="server"></asp:Label>
                                             </td>
                                         </tr>
@@ -207,7 +207,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="lbl">
+                                            <td class="style5">
                                                 Password :
                                             </td>
                                             <td>

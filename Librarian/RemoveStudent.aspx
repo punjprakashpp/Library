@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Librarian/MasterPage.master" AutoEventWireup="true" CodeFile="RemoveStudent.aspx.cs" Inherits="Librarian_RemoveStudent" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="RemoveStudent.aspx.cs" Inherits="Librarian_RemoveStudent" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">

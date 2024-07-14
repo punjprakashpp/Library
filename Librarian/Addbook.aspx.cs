@@ -17,13 +17,13 @@ public partial class Addbook : System.Web.UI.Page
     {
         if (FileUpload1.HasFile)
         {
-            string filePath = "~/Library/img/book/book.jpg";
+            string filePath = "~/img/book/book.jpg";
             string fileExtension = System.IO.Path.GetExtension(FileUpload1.FileName).ToLower();
             string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
 
             if (Array.Exists(allowedExtensions, ext => ext == fileExtension))
             {
-                filePath = "~/Library/img/book/" + FileUpload1.FileName;
+                filePath = "~/img/book/" + FileUpload1.FileName;
                 FileUpload1.SaveAs(Server.MapPath(filePath));
             }
             else
@@ -31,7 +31,7 @@ public partial class Addbook : System.Web.UI.Page
                 lblFileTypeError.Visible = true;
                 return;
             }
-            string imagePath = "~/Library/img/book/" + FileUpload1.FileName;
+            string imagePath = "~/img/book/" + FileUpload1.FileName;
 
             string query = "INSERT INTO Book (BookNo, BookName, Author, Detail, Publication, PubDate, Price, ImagePath) " +
                            "VALUES (@BookNo, @BookName, @Author, @Detail, @Publication, @PubDate, @Price, @ImagePath)";

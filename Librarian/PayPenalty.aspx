@@ -47,22 +47,20 @@
             <td>
                 <table class="style1">
                     <tr>
-                        <td class="auto-style2">
-                            Roll No. for Penalty :
-                            <asp:TextBox ID="txtRoll" runat="server" CssClass="txt"></asp:TextBox>
-                            <asp:Button ID="btnFetchIssueBook" runat="server" CssClass="btn" Text="Fetch Book" OnClick="btnFetchIssueBook_Click" Width="100px" />
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtRoll"
-                                ErrorMessage="Roll number is required" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
-                        </td>
-                        </tr>
-                    <tr>
                         <td class="style1">
-                            Select Book No. for Penalty:
-                            <asp:DropDownList ID="drpbook" runat="server" CssClass="txt" AutoPostBack="false">
-                            </asp:DropDownList>
-                            <asp:Button ID="btnSelectBook" runat="server" CssClass="btn" Text="Select Book" OnClick="btnSelectBook_Click" ValidationGroup="bookValidation" Width="100px" />
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="drpbook" ErrorMessage="Book should be selected" ForeColor="Red" SetFocusOnError="True" ValidationGroup="bookValidation"></asp:RequiredFieldValidator>
+                            Roll No.:
+                            <asp:TextBox ID="txtRoll" runat="server" CssClass="txt"></asp:TextBox>
+                            <asp:Button ID="btnFetchIssueBook" runat="server" CssClass="btn" Text="Fetch Book" OnClick="btnFetchIssueBook_Click" Width="100px" />                            
                         </td>
+                        <td class="style1">
+                            Book No.:
+                            <asp:DropDownList ID="drpbook" runat="server" CssClass="txt" AutoPostBack="false"></asp:DropDownList>
+                            <asp:Button ID="btnSelectBook" runat="server" CssClass="btn" Text="Select Book" OnClick="btnSelectBook_Click" ValidationGroup="bookValidation" Width="100px" />                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="style1"><asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtRoll" ErrorMessage="Roll number is required" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator></td>
+                        <td class="style1"><asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="drpbook" ErrorMessage="Book should be selected" ForeColor="Red" SetFocusOnError="True" ValidationGroup="bookValidation"></asp:RequiredFieldValidator></td>
                     </tr>
                 </table>
             </td>

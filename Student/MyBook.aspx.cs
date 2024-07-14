@@ -37,7 +37,7 @@ public partial class Student_MyBook : System.Web.UI.Page
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             string query = @"
-                SELECT b.BookNo, b.BookName, r.IssueDate, DATEDIFF(day, r.IssueDate, r.ReturnDate) AS Days
+                SELECT b.BookNo, b.BookName, r.IssueDate, r.ReturnDate, DATEDIFF(day, r.IssueDate, r.ReturnDate) AS Days
                 FROM Rent r
                 INNER JOIN Book b ON r.BID = b.BID
                 INNER JOIN Student s ON r.SID = s.SID
