@@ -61,7 +61,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
             SET Penalty = 1, Amount = @Amount, Detail = 'Return Date Passed', EntryDate = GETDATE()
             WHERE Status = 1
             AND DATEDIFF(day, ReturnDate, GETDATE()) > 0 
-            AND Penalty IS NULL"; // Ensures no duplicate penalty records are inserted
+            AND Penalty = 0"; // Ensures no duplicate penalty records are inserted
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@Amount", Convert.ToDouble(100.00));

@@ -179,7 +179,7 @@ public partial class BookReturn : System.Web.UI.Page
         if (lblpanalty.Text == "Yes")
         {
             // Use JavaScript to show an alert and ask if the user wants to pay the penalty
-            string script = "if(confirm('There is a penalty for this book. Do you want to pay the penalty now?')) { window.location='Penalty.aspx'; }";
+            string script = "if(confirm('There is a penalty for this book. Do you want to pay the penalty now?')) { window.location='PayPenalty.aspx'; }";
             ClientScript.RegisterStartupScript(this.GetType(), "Redirect", script, true);
         }
         else

@@ -204,7 +204,7 @@ public partial class Penalty : System.Web.UI.Page
         {
             string updateRentQuery = @"
                 UPDATE Rent 
-                SET Penalty = 0, Price = @Amount, Detail = @Detail, Status = 0 
+                SET Penalty = 0, Amount = @Amount, Detail = @Detail, Status = 0 
                 WHERE RID = @RID";
 
             SqlCommand updateRentCommand = new SqlCommand(updateRentQuery, connection);
